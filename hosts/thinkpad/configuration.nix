@@ -6,6 +6,8 @@
   myNixOS = {
     bundles.general-desktop.enable = true;
     bundles.home-manager.enable = true;
+
+    features.waybar.enable = true;
     userName = "joris";
     userConfig = ./home.nix;
     userNixosSettings = {
@@ -20,6 +22,8 @@
   networking.hostName = "thinkpad";
   networking.firewall.enable = true;
   networking.networkmanager.enable = true;
+
+  hardware.bluetooth.enable = true;
 
   # Enable docker
   virtualisation.docker.enable = true;
