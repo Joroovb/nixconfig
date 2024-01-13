@@ -8,6 +8,6 @@
       user = "joris";
     };
 
-    default_session = { command = "${pkgs.sway}/bin/sway"; };
+    #    default_session = { command = "${pkgs.sway}/bin/sway"; };
   };
 }

@@ -20,6 +20,11 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
+
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, darwin, ... }@inputs:

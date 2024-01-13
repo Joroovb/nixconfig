@@ -7,7 +7,6 @@
     bundles.general-desktop.enable = true;
     bundles.home-manager.enable = true;
 
-    features.waybar.enable = true;
     userName = "joris";
     userConfig = ./home.nix;
     userNixosSettings = {

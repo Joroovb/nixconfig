@@ -1,12 +1,14 @@
 { inputs, outputs, pkgs, lib, ... }:
 
 {
-  imports = [ outputs.homeManagerModules.default ];
+  imports = [
+    outputs.homeManagerModules.default
+    inputs.nix-index-database.hmModules.nix-index
+  ];
 
   myHomeManager = {
     alacritty.enable = true;
     bash.enable = true;
-    eza.enable = true;
     git.enable = true;
     helix.enable = true;
     lf.enable = true;
@@ -14,6 +16,8 @@
     tmux.enable = true;
     firefox.enable = true;
     zathura.enable = true;
+
+    sway.enable = true;
   };
 
   colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-hard;
@@ -27,6 +31,9 @@
       cmus
       less
       docker
+
+      sway
+      foot
 
       glow
 

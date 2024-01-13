@@ -36,6 +36,7 @@
     (pkgs.nerdfonts.override { fonts = [ "Iosevka" ]; })
     cm_unicode
     corefonts
+    font-awesome
   ];
 
   fonts.enableDefaultPackages = true;
