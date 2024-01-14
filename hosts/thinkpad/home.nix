@@ -16,11 +16,17 @@
     tmux.enable = true;
     firefox.enable = true;
     zathura.enable = true;
-
     sway.enable = true;
+
+    services.udiskie.enable = true;
   };
 
   colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-hard;
+
+  home.file."Pictures/Wallpapers" = {
+    source = ./../../wallpapers;
+    recursive = true;
+  };
 
   home = {
     username = "joris";
@@ -33,7 +39,6 @@
       docker
 
       foot
-
       glow
 
       # go

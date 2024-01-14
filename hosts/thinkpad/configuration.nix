@@ -1,4 +1,4 @@
-{ outputs, ... }:
+{ pkgs, outputs, ... }:
 
 {
   imports = [ outputs.nixosModules.default ./hardware-configuration.nix ];
@@ -6,6 +6,9 @@
   myNixOS = {
     bundles.general-desktop.enable = true;
     bundles.home-manager.enable = true;
+    power-management.enable = true;
+
+    services.greetd.enable = true;
 
     userName = "joris";
     userConfig = ./home.nix;
@@ -14,14 +17,24 @@
     };
   };
 
+  environment.systemPackages = [ pkgs.cifs-utils ];
+
+  fileSystems."/mnt/nas" = {
+    device = "//192.168.1.113/Public";
+    fsType = "cifs";
+    options = [ "credentials=/home/joris/nix/smb-secrets,uid=1000,gid=100" ];
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Set Hostname, enable firewall and network manager
   networking.hostName = "thinkpad";
   networking.firewall.enable = true;
   networking.networkmanager.enable = true;
 
+  # Enable bluetooth 
   hardware.bluetooth.enable = true;
 
   # Enable docker
@@ -31,10 +44,17 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  #services.xserver.displayManager.sddm.enable = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
 
+  # Needed to allow swaylock to unlock
+  # TODO find a way to move this into sway home-manager configuration
   security.pam.services.swaylock = { };
+
+  # Enable auto-mounting storage devices.
+  # Needed for udiskie
+  # TODO find a way to enable this in home-manager configuration
+  services.udisks2.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -48,5 +68,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  system.stateVersion = "23.11"; # DO NOT TOUCH
+  # DO NOT TOUCH
+  system.stateVersion = "23.11";
 }

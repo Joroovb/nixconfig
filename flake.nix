@@ -44,6 +44,8 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./home.nix ];
         };
+
+        "joris@fedora" = mkHome "aarch64-linux" ./hosts/work/home.nix;
       };
 
       homeManagerModules.default = ./homeManagerModules;

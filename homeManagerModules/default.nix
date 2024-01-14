@@ -21,4 +21,14 @@ let
 
     configExtension = config: (lib.mkIf cfg.bundles.${name}.enable config);
   }) (helpers.filesIn ./bundles);
-in { imports = [ ] ++ features ++ bundles; }
+
+  # Taking all module services in ./services and adding services.enables to them
+  services = helpers.extendModules (name: {
+    extraOptions = {
+      myHomeManager.services.${name}.enable =
+        lib.mkEnableOption "enable ${name} service";
+    };
+
+    configExtension = config: (lib.mkIf cfg.services.${name}.enable config);
+  }) (helpers.filesIn ./services);
+in { imports = [ ] ++ features ++ bundles ++ services; }

@@ -1,28 +1,51 @@
-{ pkgs, ... }:
+{ inputs, lib, pkgs, outputs, ... }:
 
 {
   imports = [
-    ../../modules/alacritty.nix
-    ../../modules/bash.nix
-    ../../modules/git.nix
-    ../../modules/helix.nix
-    ../../modules/lf.nix
-    ../../modules/pistol.nix
-    ../../modules/tmux.nix
+    outputs.homeManagerModules.default
+    inputs.nix-index-database.hmModules.nix-index
   ];
 
-  home.packages = with pkgs; [
-    cmus
-    less
-    tree
-    docker
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
 
-    # go
-    go
-    go-migrate
-    gotools
-    delve
-  ];
+  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-hard;
+  home.file."Pictures/Wallpapers" = {
+    source = ../../wallpapers;
+    recursive = true;
+  };
+
+  myHomeManager = {
+    sway.enable = true;
+    alacritty.enable = true;
+    git.enable = true;
+    helix.enable = true;
+    lf.enable = true;
+    pistol.enable = true;
+    tmux.enable = true;
+  };
+
+  home = {
+    username = "joris";
+    homeDirectory = lib.mkDefault "/home/joris";
+    stateVersion = "23.11";
+
+    packages = with pkgs; [
+      cmus
+      less
+      docker
+
+      # go
+      go
+      go-migrate
+      gotools
+      delve
+    ];
+  };
 
   programs.zoxide = {
     enable = true;

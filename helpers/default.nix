@@ -18,10 +18,6 @@ in rec
     inputs.darwin.lib.darwinSystem {
       pkgs = pkgsFor sys;
       specialArgs = { inherit inputs helpers outputs; };
-
-      #inputs.home-manager.useGlobalPkgs = true;
-      #inputs.home-manager.useUserPackages = true;
-
       modules = [ config outputs.darwinModules.default ];
     };
 

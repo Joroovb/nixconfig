@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ pkgs, ... }: {
   #  myNixOS.sddm.enable = lib.mkDefault true;
   #myNixOS.xremap-user.enable = lib.mkDefault true;
   #myNixOS.system-controller.enable = lib.mkDefault true;
@@ -21,7 +21,7 @@
     LC_TIME = "nl_NL.UTF-8";
   };
 
-  # Enable sound with pipewire.
+  # enable sound with pipewire.
   sound.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
