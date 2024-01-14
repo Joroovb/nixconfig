@@ -5,6 +5,8 @@
     enable = true;
     font = "Iosevka Nerd Font Mono 12";
 
+    defaultTimeout = 5000;
+
     backgroundColor = "#${base01}";
     borderColor = "#${base05}";
     textColor = "#${base04}";

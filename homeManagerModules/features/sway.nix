@@ -1,6 +1,14 @@
 { lib, pkgs, ... }:
+let
+  idleCmd = ''
+    swayidle -w \
+        timeout 300 '${pkgs.swaylock}/bin/swaylock --daemonize' \
+        timeout 600 '${pkgs.sway}/bin/swaymsg "output * dpms off"' \
+             resume '${pkgs.sway}/bin/swaymsg "output * dpms on"' \
+        before-sleep '${pkgs.swaylock}/bin/swaylock --daemonize'
+  '';
 
-{
+in {
   myHomeManager.waybar.enable = lib.mkDefault true;
   myHomeManager.swaylock.enable = lib.mkDefault true;
   myHomeManager.mako.enable = lib.mkDefault true;
@@ -25,6 +33,8 @@
         smartGaps = true;
         smartBorders = "on";
       };
+
+      startup = [{ command = "${idleCmd}"; }];
     };
   };
 }

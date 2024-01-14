@@ -119,7 +119,7 @@ in {
           format-wifi = "  {essid}";
           format-ethernet = "{ifname}: {ipaddr}/{cidr} ";
           format-linked = "{ifname} (No IP) ";
-          format-disconnected = "";
+          format-disconnected = "no connection";
           format-alt = "{ifname}: {ipaddr}/{cidr}";
           family = "ipv4";
           tooltip-format-wifi = ''
@@ -359,6 +359,10 @@ in {
           background: @workspacesfocused;
           opacity: 1;
           padding: 0 0.4em;
+      }
+
+      #workspaces button.unfocused {
+        color: @workspacesfocused;
       }
 
       #workspaces button.urgent {

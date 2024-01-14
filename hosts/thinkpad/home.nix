@@ -32,7 +32,6 @@
       less
       docker
 
-      sway
       foot
 
       glow
