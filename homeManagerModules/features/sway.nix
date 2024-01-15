@@ -8,12 +8,12 @@ let
         before-sleep '${pkgs.swaylock}/bin/swaylock --daemonize'
   '';
 
-  screenshot = pkgs.writeShellScript "screenshot.sh" ''
+  screenshot = pkgs.writeShellScript "screenshot" ''
     mkdir -p "''${HOME}/screenshots"
     ${pkgs.grim}/bin/grim "''${HOME}/screenshots/screenshot-$(date '+%s').png"
   '';
 
-  screenshotArea = pkgs.writeShellScript "screenshot-area.sh" ''
+  screenshotArea = pkgs.writeShellScript "screenshot-area" ''
     mkdir -p "''${HOME}/screenshots"
     ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "''${HOME}/screenshots/screenshot-$(date '+%s').png"
   '';
@@ -48,6 +48,18 @@ in {
         bottom = 4;
         smartGaps = true;
         smartBorders = "on";
+      };
+
+      colors = with config.colorScheme.colors; {
+        focused = {
+          background = "${base02}";
+          border = "${base02}";
+        };
+
+        unfocused = {
+          background = "${base02}";
+          border = "${base01}";
+        };
       };
 
       keybindings = let mod = config.wayland.windowManager.sway.config.modifier;
@@ -88,8 +100,8 @@ in {
         "${mod}+Shift+minus" = "move scratchpad";
         "${mod}+minus" = "scratchpad show";
 
-        "${mod}+F12" = "exec ${screenshot}";
-        "${mod}+Shift+F12" = "exec ${screenshotArea}";
+        "${mod}+F12" = "exec ${screenshot}/bin/screenshot";
+        "${mod}+Shift+F12" = "exec ${screenshotArea}/bin/screenshot-area";
 
         "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
         "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
@@ -104,7 +116,11 @@ in {
         "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5%";
       };
 
-      startup = [ { command = "${idleCmd}"; } { command = "${wallsetter}"; } ];
+      startup = [
+        { command = "${pkgs.swww}/bin/swww init"; }
+        { command = "${idleCmd}"; }
+        { command = "${wallsetter}/bin/wallsetter"; }
+      ];
     };
   };
 }

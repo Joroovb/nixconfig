@@ -39,6 +39,10 @@
       less
       docker
 
+      # Needed for sway config
+      # TODO find a way to enable this in sway config
+      swww
+
       # go
       go
       go-migrate

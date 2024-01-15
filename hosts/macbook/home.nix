@@ -1,7 +1,10 @@
 { inputs, outputs, pkgs, lib, ... }:
 
 {
-  imports = [ outputs.homeManagerModules.default ];
+  imports = [
+    outputs.homeManagerModules.default
+    inputs.nix-index-database.hmModules.nix-index
+  ];
 
   myHomeManager = {
     alacritty.enable = true;
@@ -28,6 +31,12 @@
     enableBashIntegration = true;
   };
 
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true; # see note on other shells below
+    nix-direnv.enable = true;
+  };
+
   home = {
     username = "jorisvanbreugel";
     homeDirectory = lib.mkDefault "/Users/jorisvanbreugel";
@@ -35,18 +44,21 @@
 
     packages = with pkgs; [
       (ctpv.overrideAttrs (_: { meta.platforms = lib.platforms.unix; }))
-
       cmus
       less
       docker
       lazygit
       lazydocker
 
-      # go
-      go
-      go-migrate
-      gotools
-      delve
+      (pkgs.writeShellScriptBin "flakify" ''
+        if [ ! -e flake.nix ]; then
+          nix flake new -t github:nix-community/nix-direnv .
+        elif [ ! -e .envrc ]; then
+          echo "use flake" > .envrc
+        fi
+          ''${EDITOR:-vim} flake.nix
+          ${pkgs.direnv}/bin/direnv allow
+      '')
     ];
   };
 }
