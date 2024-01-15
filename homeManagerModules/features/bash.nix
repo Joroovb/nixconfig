@@ -5,6 +5,8 @@
     enable = true;
     enableCompletion = true;
 
+    sessionVariables = { EDITOR = "${pkgs.helix}/bin/hx"; };
+
     initExtra = ''
       __bash_prompt() {
       local userpart='`export XIT=$? \

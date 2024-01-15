@@ -1,7 +1,6 @@
 { pkgs, config, ... }:
 
 {
-
   home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Iosevka" ]; }) ];
   programs.alacritty = {
     enable = true;
@@ -16,7 +15,6 @@
 
       };
 
-      shell = { program = "${pkgs.bashInteractive}/bin/bash"; };
       env = { TERM = "xterm-256color"; };
       cursor = {
         style = "Block";

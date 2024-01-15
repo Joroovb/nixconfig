@@ -15,7 +15,6 @@
     pistol.enable = true;
     tmux.enable = true;
   };
-
   colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-hard;
 
   fonts.fontconfig.enable = true;
@@ -37,6 +36,11 @@
     nix-direnv.enable = true;
   };
 
+  home.file."Pictures/Wallpapers" = {
+    source = ./../../wallpapers;
+    recursive = true;
+  };
+
   home = {
     username = "jorisvanbreugel";
     homeDirectory = lib.mkDefault "/Users/jorisvanbreugel";
@@ -50,13 +54,15 @@
       lazygit
       lazydocker
 
+      weechat
+
       (pkgs.writeShellScriptBin "flakify" ''
         if [ ! -e flake.nix ]; then
           nix flake new -t github:nix-community/nix-direnv .
         elif [ ! -e .envrc ]; then
           echo "use flake" > .envrc
         fi
-          ''${EDITOR:-vim} flake.nix
+          ''${EDITOR:-nano} flake.nix
           ${pkgs.direnv}/bin/direnv allow
       '')
     ];

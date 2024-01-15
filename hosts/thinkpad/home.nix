@@ -41,11 +41,15 @@
       foot
       glow
 
-      # go
-      go
-      go-migrate
-      gotools
-      delve
+      (pkgs.writeShellScriptBin "flakify" ''
+        if [ ! -e flake.nix ]; then
+          nix flake new -t github:nix-community/nix-direnv .
+        elif [ ! -e .envrc ]; then
+          echo "use flake" > .envrc
+        fi
+          ''${EDITOR:-nano} flake.nix
+          ${pkgs.direnv}/bin/direnv allow
+      '')
     ];
   };
 }
