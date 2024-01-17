@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   programs.tmux = {
@@ -10,13 +10,13 @@
     historyLimit = 2000;
     keyMode = "vi";
     mouse = true;
-    newSession = true;
+    newSession = false;
     prefix = "C-a";
     sensibleOnTop = true;
     terminal = "screen-256color";
     aggressiveResize = true;
 
-    extraConfig = ''
+    extraConfig = with config.colorScheme.colors; ''
       set -g status-interval 2
       set -g status-left '🏠 #S'
       set -g status-left-length 200
@@ -24,16 +24,24 @@
       set -g status-right '%H:%M %d-%m-%y'
       set -g status-position top
 
+      # Move around panes line vim
+      bind -r h select-pane -L
+      bind -r j select-pane -D
+      bind -r k select-pane -U
+      bind -r l select-pane -R
+      bind -r C-h select-window -t :-
+      bind -r C-l select-window -t :+
+
       # renumber windows on kill
       set-option -g renumber-windows on
 
       # Colors
-      set -g pane-active-border-style fg='#eeff44'
-      set -g status-bg '#181818'
-      set -g status-fg '#e4e4ef'
+      set -g pane-active-border-style fg='#${base0A}'
+      set -g status-bg '#${base00}'
+      set -g status-fg '#${base04}'
 
-      set -g window-status-current-format '#[fg=#ffdd33]*#I-#W'
-      set -g window-status-format '#I-#W'
+      set -g window-status-current-format '#[fg=#${base0A}][#I: #W]'
+      set -g window-status-format '#I: #W'
       set-option -g status-justify centre
 
       bind-key -N "Kill the current window" & kill-window
