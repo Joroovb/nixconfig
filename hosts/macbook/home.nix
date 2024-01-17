@@ -4,6 +4,7 @@
   imports = [
     outputs.homeManagerModules.default
     inputs.nix-index-database.hmModules.nix-index
+    inputs.nixvim.homeManagerModules.nixvim
   ];
 
   myHomeManager = {
@@ -14,7 +15,10 @@
     lf.enable = true;
     pistol.enable = true;
     tmux.enable = true;
+    vim.enable = true;
+    neovim.enable = true;
   };
+
   colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-hard;
 
   fonts.fontconfig.enable = true;
@@ -53,6 +57,9 @@
       docker
       lazygit
       lazydocker
+
+      go
+      ripgrep
 
       weechat
 

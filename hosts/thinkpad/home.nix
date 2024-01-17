@@ -4,20 +4,30 @@
   imports = [
     outputs.homeManagerModules.default
     inputs.nix-index-database.hmModules.nix-index
+    inputs.nixvim.homeManagerModules.nixvim
   ];
 
   myHomeManager = {
+    # Terminal Emulator
     alacritty.enable = true;
+
+    # CLI tools
     bash.enable = true;
     git.enable = true;
-    helix.enable = true;
     lf.enable = true;
     pistol.enable = true;
     tmux.enable = true;
-    firefox.enable = true;
     zathura.enable = true;
-    sway.enable = true;
 
+    # GUI
+    sway.enable = true;
+    firefox.enable = true;
+
+    # Editors
+    neovim.enable = true;
+    helix.enable = true;
+
+    # Services
     services.udiskie.enable = true;
   };
 
