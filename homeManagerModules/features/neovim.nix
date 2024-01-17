@@ -28,6 +28,10 @@
         action = "<cmd>Telescope buffers<CR>";
         key = "<leader>b";
       }
+      {
+        action = "<cmd>noh<CR>";
+        key = "<leader>c";
+      }
     ];
 
     plugins = {
